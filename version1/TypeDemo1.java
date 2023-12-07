@@ -160,14 +160,14 @@ public class TypeDemo1 extends JFrame {
                     new TypeDemo1().setVisible(true);
                     break;
                 case 1 :
-                    System.out.println("Please enter timer : ");
-                    int timer = scanner.nextInt();
-                    new TypeDemo1(timer, "dictionary2.txt", 100).setVisible(true);
+                    // System.out.println("Please enter timer : ");
+                    // int timer = scanner.nextInt();
+                    new TypeDemo1(30, "dictionary2.txt", 100).setVisible(true);
                     break;
                 case 2 :
-                    System.out.println("Please enter timer : ");
-                    timer = scanner.nextInt();
-                    new TypeDemo1(timer, "quote.txt", 5).setVisible(true);
+                    // System.out.println("Please enter timer : ");
+                    // timer = scanner.nextInt();
+                    new TypeDemo1(30, "quote.txt", 5).setVisible(true);
                 default:
                     System.out.println();
             }
