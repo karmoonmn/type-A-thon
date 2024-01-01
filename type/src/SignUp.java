@@ -44,7 +44,7 @@ public class SignUp extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\joans\\OneDrive\\Documents\\WIX1002\\NetBeansProjects\\Stopwatch\\src\\Icon\\logo4.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("logo4.jpg")); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(153, 153, 153));
