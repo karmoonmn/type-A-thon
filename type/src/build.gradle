@@ -1,4 +1,0 @@
-dependencies {
-    // Other dependencies
-    implementation 'mysql:mysql-connector-java:8.0.35' // Replace with the latest version
-}
