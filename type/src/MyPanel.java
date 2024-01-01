@@ -145,8 +145,8 @@ public class MyPanel extends JPanel {
         Dimension buttonSize = new Dimension(150, 40);
         randomText.setPreferredSize(buttonSize);
         sameText.setPreferredSize(buttonSize);
-        exitButton.setPreferredSize(new Dimension(50, 40));
-        buttonPanel.add(Box.createRigidArea(new Dimension(180, 0))); // Add a rigid area of 100 pixels
+        exitButton.setPreferredSize(new Dimension(70, 40));
+        buttonPanel.add(Box.createRigidArea(new Dimension(160, 0))); // Add a rigid area of 100 pixels
 
         buttonPanel.add(randomText);
         buttonPanel.add(sameText);
