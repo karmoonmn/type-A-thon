@@ -7,6 +7,9 @@ public class Profile extends javax.swing.JFrame {
 
     public Profile() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+
     }
 
 
