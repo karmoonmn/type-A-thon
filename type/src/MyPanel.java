@@ -10,7 +10,6 @@ import java.util.Timer;
 public class MyPanel extends JPanel {
     private GenerateRandomText generateRandomText;
 
-    NoDeleteAllFilter noDeleteAllFilter;
     public int gameDuration;
     public String textFile;
     public int numOfWord;
@@ -41,7 +40,6 @@ public class MyPanel extends JPanel {
         this.textFile = textFile;
         this.numOfWord = numOfWord;
 
-        noDeleteAllFilter = new NoDeleteAllFilter();
         generateRandomText = new GenerateRandomText(textFile);
         randomWord = generateRandomText.generateWord(numOfWord);
         initialiseUI();
@@ -177,18 +175,9 @@ public class MyPanel extends JPanel {
         add(panel);
         add(textField, BorderLayout.SOUTH);
 
-        ((AbstractDocument) textField.getDocument()).setDocumentFilter(noDeleteAllFilter);
         this.setFocusable(true);
     }
-    private static class NoDeleteAllFilter extends DocumentFilter {
-        @Override
-        public void remove(DocumentFilter.FilterBypass fb, int offset, int length) throws BadLocationException {
-            // Allow removing characters except when length is equal to the document's length
-            if (length != fb.getDocument().getLength()) {
-                super.remove(fb, offset, length);
-            }
-        }
-    }
+
 
 
 }
