@@ -44,7 +44,6 @@ public class MyPanel extends JPanel {
         randomWord = generateRandomText.generateWord(numOfWord);
         initialiseUI();
         buttonAction();
-        textField.setEnabled(false);
     }
 
     public void buttonAction() {
@@ -157,6 +156,7 @@ public class MyPanel extends JPanel {
         textField = new JTextField();
         textField.setPreferredSize(new Dimension(200, 45));
         textField.setFont(new Font("Times", Font.PLAIN, 20));
+        textField.setEnabled(false);
         timePanel = new JPanel();
         textPanel = new JPanel();
 
