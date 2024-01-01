@@ -227,7 +227,7 @@ public class Menu2 extends javax.swing.JFrame {
     }                                             
 
     private void SuddenDeathButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-        //new MainGame(30,"dictionary.txt",40,3).setVisible(true);
+        new MainGame(30,"dictionary.txt",40,3).setVisible(true);
     }                                                 
 
     /**
