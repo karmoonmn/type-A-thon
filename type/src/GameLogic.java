@@ -34,8 +34,6 @@ public class GameLogic extends MyPanel {
 
     public GameLogic(int gameDuration, String textFile, int numOfWord) {
         super(gameDuration, textFile, numOfWord);
-        setRandomTextButton();
-        setSameTextButton();
         showTimer();
         score = new Score();
         textfieldListener();
