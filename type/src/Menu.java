@@ -229,7 +229,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void QuotesModeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        new MainGame(30, "quote.txt", 15, "Quotes Mode").setVisible(true);
+        new MainGame(0, "quote.txt", 10, "Quotes Mode").setVisible(true);
         this.dispose();
     }
 
