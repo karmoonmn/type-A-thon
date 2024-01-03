@@ -215,7 +215,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void DefaultModeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        new MainGame(3, "dictionary.txt", 100, "Default Mode").setVisible(true);
+        new MainGame(3, "dictionary.txt", 100, "Default Mode", false).setVisible(true);
         this.dispose();
     }
 
