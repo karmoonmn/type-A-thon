@@ -15,8 +15,12 @@ public class MainGame extends JFrame {
     }
 
 
-    public MainGame(int gameDuration, String textFile, int numOfWord, String mode) {
-        gameLogic = new TimerGameLogic(gameDuration, textFile, numOfWord);
+   public MainGame(int gameDuration, String textFile, int numOfWord, String mode, boolean punctuation) {
+        if (punctuation) {
+            gameLogic = new TimerGameLogic(gameDuration, textFile, numOfWord, punctuation);
+        } else {
+            gameLogic = new TimerGameLogic(gameDuration, textFile, numOfWord);
+        }
         getContentPane().add(gameLogic);
         setTitle(mode);
         frameSetting();
