@@ -179,11 +179,11 @@ public class TimedMode extends javax.swing.JFrame {
     private void Jbutton15sActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbutton15sActionPerformed
         boolean isPunctuationEnabled = isPunctuationCheckBox.isSelected();
         if (isPunctuationEnabled) {
-            new MainGame(15, "dictionary2.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(15, "dictionary2.txt", 50, "Timed Mode", true).setVisible(true);
             this.dispose();
         }
         else {
-            new MainGame(15, "dictionary.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(15, "dictionary.txt", 50, "Timed Mode", false).setVisible(true);
         this.dispose();
         }
     }//GEN-LAST:event_Jbutton15sActionPerformed
@@ -192,11 +192,11 @@ public class TimedMode extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean isPunctuationEnabled = isPunctuationCheckBox.isSelected();
         if (isPunctuationEnabled) {
-            new MainGame(60, "dictionary2.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(60, "dictionary2.txt", 50, "Timed Mode", true).setVisible(true);
             this.dispose();
         }
         else {
-            new MainGame(60, "dictionary.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(60, "dictionary.txt", 50, "Timed Mode", false).setVisible(true);
         this.dispose();
         }
     }//GEN-LAST:event_jbutton60sActionPerformed
@@ -205,11 +205,11 @@ public class TimedMode extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean isPunctuationEnabled = isPunctuationCheckBox.isSelected();
         if (isPunctuationEnabled) {
-            new MainGame(45, "dictionary2.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(45, "dictionary2.txt", 50, "Timed Mode", true).setVisible(true);
             this.dispose();
         }
         else {
-            new MainGame(45, "dictionary.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(45, "dictionary.txt", 50, "Timed Mode", false).setVisible(true);
         this.dispose();
         }
     }//GEN-LAST:event_jbutton45sActionPerformed
@@ -218,11 +218,11 @@ public class TimedMode extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean isPunctuationEnabled = isPunctuationCheckBox.isSelected();
         if (isPunctuationEnabled) {
-            new MainGame(30, "dictionary2.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(30, "dictionary2.txt", 50, "Timed Mode", true).setVisible(true);
             this.dispose();
         }
         else {
-            new MainGame(30, "dictionary.txt", 50, "Timed Mode").setVisible(true);
+            new MainGame(30, "dictionary.txt", 50, "Timed Mode", false).setVisible(true);
         this.dispose();
         }
     }//GEN-LAST:event_jbutton30sActionPerformed
