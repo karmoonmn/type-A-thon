@@ -6,6 +6,15 @@ public class TimerGameLogic extends GameLogic {
     public TimerGameLogic(int gameDuration, String textFile, int numOfWord) {
         super(gameDuration, textFile, numOfWord);
     }
+    
+    public TimerGameLogic(int gameDuration, String textFile, int numOfWord, boolean punctuation) {
+        super(gameDuration, textFile, numOfWord);
+    }
+    
+    @Override
+    public void getRandomWord() {
+        randomWord = generateRandomText.generateWord(numOfWord, true);
+    }
 
     @Override
     public void startGame() {
