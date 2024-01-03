@@ -41,15 +41,19 @@ public class MyPanel extends JPanel {
         this.numOfWord = numOfWord;
 
         generateRandomText = new GenerateRandomText(textFile);
-        randomWord = generateRandomText.generateWord(numOfWord);
         initialiseUI();
         buttonAction();
+        getRandomWord();
     }
 
     public void buttonAction() {
         setExitButton();
         setRandomTextButton();
         setSameTextButton();
+    }
+
+    public void getRandomWord() {
+        randomWord = generateRandomText.generateWord(numOfWord);
     }
 
     public void setExitButton() {
@@ -93,7 +97,7 @@ public class MyPanel extends JPanel {
                 textField.setText("");
                 textField.enable(true);
                 resetPanel();
-                randomWord = generateRandomText.generateWord(numOfWord);
+                getRandomWord();
                 currentWordIndex = 0;
                 setRandomWord();
                 sameText.setEnabled(false);
