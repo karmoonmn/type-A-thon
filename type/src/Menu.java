@@ -1,4 +1,3 @@
-
 public class Menu extends javax.swing.JFrame {
 
     public Menu(){
@@ -59,6 +58,11 @@ public class Menu extends javax.swing.JFrame {
         LeaderboardButton.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         LeaderboardButton.setForeground(new java.awt.Color(255, 255, 204));
         LeaderboardButton.setText("Leaderboard");
+        LeaderboardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LeaderboardButtonActionPerformed(evt);
+            }
+        });
 
         QuotesModeButton.setBackground(new java.awt.Color(0, 153, 153));
         QuotesModeButton.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
@@ -248,7 +252,26 @@ public class Menu extends javax.swing.JFrame {
     }
 
     private void ProfileActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        Menu.this.dispose();
+        
+        // Create a bigger JFrame for the profile
+    
+        // Create an instance of the Profile panel and add it to the frame
+        Profiledesign profileDetailsFrame  = new Profiledesign();
+        profileDetailsFrame.setTitle("Player's Profile");
+        profileDetailsFrame.setLocationRelativeTo(null); 
+        profileDetailsFrame.pack();// Center the frame
+        profileDetailsFrame.setVisible(true);
+        profileDetailsFrame.setSize(600, 500); 
+    }
+
+    private void LeaderboardButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose();
+        Leaderboard leaderboardFrame = new Leaderboard();
+        leaderboardFrame.setTitle("Leaderboard"); // Set the title
+        leaderboardFrame.setVisible(true);
+        leaderboardFrame.pack();
+        leaderboardFrame.setLocationRelativeTo(null);
     }
 
     /**

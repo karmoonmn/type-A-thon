@@ -1,5 +1,6 @@
+import javax.swing.JOptionPane;
 public class Profile extends javax.swing.JFrame {
-        
+    static String email;       
 
     public Profile() {
         initComponents();
@@ -10,7 +11,7 @@ public class Profile extends javax.swing.JFrame {
 
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                               
     private void initComponents() {
 
         Left = new javax.swing.JPanel();
@@ -233,12 +234,32 @@ public class Profile extends javax.swing.JFrame {
     }                                            
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-        Menu MenuFrame = new Menu();
-        MenuFrame.setVisible(true);
-        MenuFrame.setLocationRelativeTo(null);
-        this.dispose();
-    }                                           
+        String email = jTextField1.getText();
+        String password = new String(jPasswordField1.getPassword());
+    
+        // Call a method to authenticate the player
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter email and password.");
+        } else {
+        boolean loginSuccess = authenticatePlayer(email, password);
+        if (loginSuccess) {
+                        this.email = email;
+                        Menu menu = new Menu();
+                        menu.setVisible(true);
+                        this.dispose();
+        } else {
+            // Authentication failed
+            JOptionPane.showMessageDialog(this, "Login failed. Please check your credentials.");
+        }
+    } }   
+    private boolean authenticatePlayer(String email, String password) {
+        // Implement logic to authenticate the player
+        // For example (this is a placeholder, replace it with your database logic):
+        PlayerProfileDAO profileDAO = new PlayerProfileDAO();
+        boolean authenticationSuccessful = profileDAO .authenticatePlayer(email, password);
+        return authenticationSuccessful;
+    }
+                                             
 
     /**
      * @param args the command line arguments

@@ -13,7 +13,7 @@ public class TimerGameLogic extends GameLogic {
     
     @Override
     public void getRandomWord() {
-        randomWord = generateRandomText.generateWord(numOfWord, true);
+        randomWord = GenerateRandomText.generateWord(numOfWord, true);
     }
 
     @Override

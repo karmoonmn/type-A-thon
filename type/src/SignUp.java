@@ -1,8 +1,4 @@
-
-package assignment;
-
-import assignment.Profile;
-
+import javax.swing.JOptionPane;
 public class SignUp extends javax.swing.JFrame {
 
     public SignUp() {
@@ -200,7 +196,7 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
     }                                           
 
@@ -214,11 +210,35 @@ public class SignUp extends javax.swing.JFrame {
     }                                           
 
     private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        Menu MenuFrame = new Menu();
-        MenuFrame.setVisible(true);
-        MenuFrame.setLocationRelativeTo(null);
-        this.dispose();
-    }                                            
+        String fullname = jTextField1.getText();
+        String email = jTextField2.getText();
+        String password = new String(jPasswordField1.getPassword());
+    
+        // Call your method to register a new player
+        if (fullname.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+        }else{
+        boolean registrationSuccess = registerNewPlayer(fullname, email, password);
+        if (registrationSuccess) {
+            // Registration successful, show a success message or navigate to another frame/page
+            // For example:
+            JOptionPane.showMessageDialog(this, "Registration successful!");
+        } else {
+            // Registration failed, show an error message or handle failure
+            // For example:
+            JOptionPane.showMessageDialog(this, "Registration failed. Please try again.");
+        }}
+    }     
+    private boolean registerNewPlayer(String username, String email, String password) {
+            // Implement logic to register the player in the database
+            // Use your JDBC code here to insert the player details into the database
+            // Return true if registration is successful, otherwise false
+            // For example:
+            PlayerProfileDAO profileDAO = new PlayerProfileDAO();
+            boolean registrationSuccessful = profileDAO.registerPlayer(username, email, password);
+            return registrationSuccessful;
+        }
+                                               
 
     /**
      * @param args the command line arguments

@@ -35,14 +35,6 @@ public class GenerateRandomText {
         return dic.get(r.nextInt(dic.size()));
     }
 
-    public String [] generateWord(int count){
-        String [] word = new String[count];
-        for (int i = 0; i < count; i++) {
-            word[i] = getRandomWord();
-        }
-        return word;
-    }
-
     public String[] generateWord(int count) {
         String[] word = new String[count];
         for (int i = 0; i < count; i++) {
