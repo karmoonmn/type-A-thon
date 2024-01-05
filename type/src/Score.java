@@ -1,4 +1,11 @@
-import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 
 public class Score extends JPanel{
 
@@ -21,5 +28,46 @@ public class Score extends JPanel{
 
         System.out.println("Words Per Minute (WPM): " + wpm);
         String message = String.format("WPM        : %.2f\nAccuracy : %.2f%%", wpm, accuracy);
-        JOptionPane.showMessageDialog(null, message);    }
+        JOptionPane.showMessageDialog(null, message);    
+        saveResultsToDatabase(accuracy, wpm);
+    }
+       
+    
+
+private void saveResultsToDatabase(double accuracy, double WPM) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            int playerID = getPlayerIdFromEmail(Profile.email);                            // Fetch playerId using emai
+            String insertQuery = "INSERT INTO results (players_ID, accuracy, wpm) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setInt(1, playerID); // Replace userId with the actual user's ID
+                preparedStatement.setDouble(2, accuracy);
+                preparedStatement.setDouble(3, WPM);
+                preparedStatement.executeUpdate();
+            }
+            System.out.println("Results saved to the database.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Accuracy : " + (int) accuracy + " WPM : " + (int) WPM);
+    }
+
+    public int getPlayerIdFromEmail(String email) {
+        int playerId = -1; // Default value or error handling if player is not found
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String selectQuery = "SELECT players_id FROM player_profiles WHERE players_email = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setString(1, email);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        playerId = resultSet.getInt("players_id");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle SQL exception
+        }
+        return playerId;
+    }
 }
