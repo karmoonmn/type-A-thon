@@ -55,7 +55,6 @@ public class GenerateRandomText {
             }
 
         }
-        System.out.println("generate punctuation");
         return word;
     }
 
