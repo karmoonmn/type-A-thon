@@ -3,8 +3,8 @@ import java.util.TimerTask;
 
 public class StopWatchGameLogic extends GameLogic {
 
-    public StopWatchGameLogic(int gameDuration, String textFile, int numOfWord) {
-        super(gameDuration, textFile, numOfWord);
+    public StopWatchGameLogic(int gameDuration, String textFile, int numOfWord, String userName) {
+        super(gameDuration, textFile, numOfWord, userName);
     }
 
 

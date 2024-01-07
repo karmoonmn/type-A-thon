@@ -17,11 +17,11 @@ public class GenerateRandomText {
         r = new Random();
     }
 
-    public List <String> loadDictionary(){
+    public List<String> loadDictionary() {
         List<String> dic = new ArrayList<>();
-        try (BufferedReader reader= new BufferedReader(new FileReader(dictionary))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(dictionary))) {
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 dic.add(line.trim());
             }
         } catch (IOException e) {
@@ -31,7 +31,7 @@ public class GenerateRandomText {
 
     }
 
-    public String getRandomWord(){
+    public String getRandomWord() {
         return dic.get(r.nextInt(dic.size()));
     }
 
@@ -55,6 +55,7 @@ public class GenerateRandomText {
             }
 
         }
+        System.out.println("generate punctuation");
         return word;
     }
 

@@ -1,14 +1,15 @@
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Timer;
+import java.io.IOException;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class GameLogic extends MyPanel {
@@ -32,29 +33,32 @@ public class GameLogic extends MyPanel {
     public int instantSentenceIndex = 0;
     public int sentenceWordCount = 0;
 
-    public GameLogic(int gameDuration, String textFile, int numOfWord) {
-        super(gameDuration, textFile, numOfWord);
+    String typedWord = "";
+    String actualWord = "";
+
+
+    public GameLogic(int gameDuration, String textFile, int numOfWord, String userName) {
+        super(gameDuration, textFile, numOfWord, userName);
         showTimer();
         score = new Score();
         textfieldListener();
     }
 
 
-    public void spaceBar() {
-        String typedWord = textField.getText().trim();
-        String actualWord = currentSentenceArr[sentenceWordCount];
+    public void spaceBar()  {
+         typedWord = textField.getText().trim();
+         actualWord = currentSentenceArr[sentenceWordCount];
         if (typedWord.equals(actualWord)) {
             correctWordsTyped++;
         }
         if (!typedWord.equals(actualWord) || typedWord.length() < actualWord.length()) {
-            correctCharactersTyped -= currentCorrectChar;
-            totalCharactersTyped += (actualWord.length() - typedWord.length());
-            currentLabelIndex += (actualWord.length() - typedWord.length());
+            handleWrongWord();
         }
+        typedWord = "";
+        actualWord = "";
 
         currentCorrectChar = 0;
         textField.setText("");
-//        ((DocumentFilter.FilterBypass) noDeleteAllFilter.getBypass()).remove(0, textField.getDocument().getLength());
 
         spacePressed = true;
         sentenceWordCount++;
@@ -79,7 +83,16 @@ public class GameLogic extends MyPanel {
             }
         }
     }
-
+    public void handleWrongWord (){
+        correctCharactersTyped -= currentCorrectChar;
+        totalCharactersTyped += (actualWord.length() - typedWord.length());
+        currentLabelIndex += (actualWord.length() - typedWord.length());
+        try {
+            new MistypedWordCSV(userName, actualWord);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void displayScore() {
@@ -108,6 +121,7 @@ public class GameLogic extends MyPanel {
                     spacePressed = false; // Reset the flag
                     return; // Do nothing if space was pressed
                 }
+
                 currentLabelIndex--;
                 instantSentenceIndex--;
             }
@@ -125,10 +139,6 @@ public class GameLogic extends MyPanel {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if ((e.getModifiers() & ActionEvent.CTRL_MASK) != 0 && e.getKeyCode() == KeyEvent.VK_DELETE) {
-                    // Prevent deleting all text at once
-                    e.consume();
-                }
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     spaceBar();
                 }
@@ -184,12 +194,8 @@ public class GameLogic extends MyPanel {
                     handleWrongChar();
                 }
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Word completed!");
+                System.out.print("");
             }
-        } else {
-            // Handle the case where the user types more characters than the length of the current word
-            //provide feedback or take appropriate action
-            System.out.println("Word completed!");
         }
 
         currentLabelIndex++;

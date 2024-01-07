@@ -17,8 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class MyPanel extends JPanel {
-    public GenerateRandomText generateRandomText;
+    GenerateRandomText generateRandomText;
 
+    public String userName;
     public int gameDuration;
     public String textFile;
     public int numOfWord;
@@ -44,25 +45,32 @@ public class MyPanel extends JPanel {
     public int currentLabelIndex = 0;
 
 
-    public MyPanel(int gameDuration, String textFile, int numOfWord) {
+    public MyPanel(int gameDuration, String textFile, int numOfWord, String userName) {
         this.gameDuration = gameDuration;
         this.textFile = textFile;
         this.numOfWord = numOfWord;
+        this.userName = userName;
 
-        generateRandomText = new GenerateRandomText(textFile);
+        initialiseTextFile();
+
         initialiseUI();
         buttonAction();
         getRandomWord();
     }
 
-    public void buttonAction() {
-        setExitButton();
-        setRandomTextButton();
-        setSameTextButton();
+    public void initialiseTextFile (){
+        generateRandomText = new GenerateRandomText(textFile);
     }
 
     public void getRandomWord() {
         randomWord = generateRandomText.generateWord(numOfWord);
+    }
+
+
+    public void buttonAction() {
+        setExitButton();
+        setRandomTextButton();
+        setSameTextButton();
     }
 
     public void setExitButton() {
@@ -72,7 +80,7 @@ public class MyPanel extends JPanel {
                 if (timer != null) {
                     timer.cancel();
                 }
-                new Menu().setVisible(true);
+                new Menu(userName).setVisible(true);
                 Component component = SwingUtilities.getRoot(MyPanel.this);
                 if (component instanceof JFrame) {
                     ((JFrame) component).dispose();
@@ -116,9 +124,10 @@ public class MyPanel extends JPanel {
     }
 
     public void setRandomWord() {
-        label = new JLabel[numOfWord * 50];
+        label = new JLabel[numOfWord * 10];
         currentWord = randomWord[currentWordIndex];
         currentSentenceArr = currentWord.split("\\s+");
+
 
         int index = 0;
         for (int i = currentLabelIndex; i < currentWord.length() + currentLabelIndex; i++) {
@@ -190,7 +199,6 @@ public class MyPanel extends JPanel {
 
         this.setFocusable(true);
     }
-
 
 
 }

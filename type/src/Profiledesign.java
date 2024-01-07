@@ -1,10 +1,15 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,13 +18,24 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 
 public class Profiledesign extends javax.swing.JFrame {
+    private JPanel profileDetailsPanel;
     private static ArrayList<String> emails;
+    private static String email;
+    static String email_sudden;
     /**
      * Creates new form Profiledesign
      */
-    public Profiledesign() {
+    public Profiledesign(String email) {
+        this.email = email;
         initComponents();
         fetchEmails(); 
         createProfileButtons();
@@ -53,6 +69,9 @@ public class Profiledesign extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         ExitButton = new javax.swing.JButton();
+        Mispelled_words = new javax.swing.JLabel();
+        Mispelled_label = new javax.swing.JLabel();
+        sudden_death = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(630, 500));
@@ -125,6 +144,34 @@ public class Profiledesign extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Verdana Pro Cond Black", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText(null);
+
+        Mispelled_words.setFont(new java.awt.Font("Verdana Pro Cond Black", 1, 12)); // NOI18N
+        Mispelled_words.setForeground(new java.awt.Color(255, 255, 255));
+
+        Mispelled_label.setFont(new java.awt.Font("Verdana Pro Cond Black", 1, 14)); // NOI18N
+        Mispelled_label.setForeground(new java.awt.Color(255, 255, 255));
+
+
+        sudden_death.setBackground(new java.awt.Color(0, 51, 51));
+        sudden_death.setFont(new java.awt.Font("Verdana Pro Cond Black", 1, 12)); // NOI18N
+        sudden_death.setForeground(new java.awt.Color(255, 255, 255));
+        sudden_death.setText(null);
+        sudden_death.setBorder(null);
+        sudden_death.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+               sudden_death.setBackground(new java.awt.Color(0, 51, 51).darker()); // Darken the background color on hover
+            }
+        
+            public void mouseExited(MouseEvent e) {
+                sudden_death.setBackground(new java.awt.Color(0, 51, 51)); // Restore the original background color when the cursor leaves
+            }
+        });
+        sudden_death.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sudden_deathActionPerformed(evt);
+            }
+        });
+
         
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -135,39 +182,50 @@ public class Profiledesign extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Quotes, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Usernamelabel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Last10Label, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AlltimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(Mispelled_label, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(Mispelled_words, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Last10Label, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(AlltimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(sudden_death, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(Usernamelabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Last10Label)
-                    .addComponent(AlltimeLabel))
-                .addGap(28, 28, 28)
+                    .addComponent(AlltimeLabel)
+                    .addComponent(Last10Label))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addComponent(Quotes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(Mispelled_label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Mispelled_words, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(sudden_death)
+                .addGap(18, 18, 18)
+                .addComponent(Quotes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
+
 
         jPanel3.add(jPanel2);
         jPanel2.setBounds(180, 60, 450, 430);
@@ -209,15 +267,15 @@ public class Profiledesign extends javax.swing.JFrame {
 
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {     
         this.dispose();                                    
-        Menu menu = new Menu();
+        Menu menu = new Menu(email);
         menu.setVisible(true);
         menu.setLocationRelativeTo(null);
     } 
+
+    private void sudden_deathActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        displaydetails(email_sudden);
+    }     
  
-
-    
-
-    
     
     static void fetchEmails() {
         // Fetch usernames from the database and populate the usernames ArrayList
@@ -273,11 +331,17 @@ public class Profiledesign extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            displayPlayerProfile(email);
+            try {
+                Profiledesign.email_sudden = email;
+                displayPlayerProfile(email);
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         }
     }
 
-    private void displayPlayerProfile(String email) {
+    private void displayPlayerProfile(String email) throws IOException {
         jPanel2.removeAll();
     
         try (Connection connection = DatabaseConnection.getConnection()) {
@@ -313,8 +377,8 @@ public class Profiledesign extends javax.swing.JFrame {
                                     last10AvgWPM1 = last10AvgResult.getDouble("last_10_avg_wpm");
                                 }
 
-                                String last10AvgAccuracy = String.format("%.2f", last10AvgAccuracy1);
-                                String last10AvgWPM = String.format(" %.2f", last10AvgWPM1);
+                                String last10AvgAccuracy = String.format("%.5f", last10AvgAccuracy1);
+                                String last10AvgWPM = String.format(" %.5f", last10AvgWPM1);
     
                                 String allTimeAvgQuery = "SELECT AVG(accuracy) AS all_time_avg_accuracy, AVG(wpm) AS all_time_avg_wpm " +
                                         "FROM results " +
@@ -331,8 +395,8 @@ public class Profiledesign extends javax.swing.JFrame {
                                             allTimeAvgWPM1 = allTimeAvgResult.getDouble("all_time_avg_wpm");
                                         }
 
-                                        String allTimeAvgAccuracy = String.format("%.2f", allTimeAvgAccuracy1);
-                                        String allTimeAvgWPM = String.format("%.2f", allTimeAvgWPM1);
+                                        String allTimeAvgAccuracy = String.format("%.5f", allTimeAvgAccuracy1);
+                                        String allTimeAvgWPM = String.format("%.5f", allTimeAvgWPM1);
 
                                         // Display fetched data in the UI (labels, etc.)
                                         Usernamelabel.setText("USERNAME : "+ email);
@@ -343,6 +407,22 @@ public class Profiledesign extends javax.swing.JFrame {
                                         AlltimeLabel.setText("ALL TIME");
                                         jLabel3.setText("AVG ACCURACY : "  + allTimeAvgAccuracy);
                                         jLabel5.setText("AVG WPM : " + allTimeAvgWPM);
+
+                                        sudden_death.setText("Sudden Death Score");
+
+                                        Mispelled_label.setText("10 MOST MISSPELLED WORDS");
+                                        MistypedWordCSV obj = new MistypedWordCSV(email);
+                                        String[] topWordsArray = obj.getTop10WordsArray();
+                                        StringBuilder Text = new StringBuilder("<html>");
+                                        for (int i =0; i<topWordsArray.length; i++){
+                                            Text.append(topWordsArray[i]).append("               ");
+                                            if ((i+1)%5 ==0){
+                                                Text.append("<br/>");
+                                            }
+
+                                        }
+                                        Text.append("</html>");
+                                        Mispelled_words.setText(Text.toString());
                                         
                                         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -353,39 +433,50 @@ public class Profiledesign extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Quotes, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Usernamelabel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Last10Label, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AlltimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(Mispelled_label, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(Mispelled_words, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Last10Label, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(AlltimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(sudden_death, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(Usernamelabel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Last10Label)
-                    .addComponent(AlltimeLabel))
-                .addGap(28, 28, 28)
+                    .addComponent(AlltimeLabel)
+                    .addComponent(Last10Label))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addComponent(Mispelled_label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Mispelled_words, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(sudden_death)
+                .addGap(18, 18, 18)
                 .addComponent(Quotes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
+
                                 
                                         // Revalidate and repaint jPanel2 to reflect changes
                                         jPanel2.setVisible(true);
@@ -415,6 +506,97 @@ public class Profiledesign extends javax.swing.JFrame {
         }
 
     }
+    private void displaydetails(String email){
+    JPanel profileDetailsPanel = new JPanel(new BorderLayout());
+    profileDetailsPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+    try (Connection connection = DatabaseConnection.getConnection()) {
+            // Check if records exist for the selected email
+            String countQuery = "SELECT COUNT(*) AS record_count " +
+                    "FROM suddendeathresult " +
+                    "INNER JOIN player_profiles ON suddendeathresult.players_ID = player_profiles.players_ID " +
+                    "WHERE player_profiles.players_email = ?";
+            try (PreparedStatement countStatement = connection.prepareStatement(countQuery)) {
+                countStatement.setString(1, email);
+                try (ResultSet countResult = countStatement.executeQuery()) {
+                    countResult.next();
+                    int recordCount = countResult.getInt("record_count");
+    
+                    if (recordCount > 0) {
+                                String allTimeAvgQuery = "SELECT AVG(accuracy) AS all_time_avg_accuracy, AVG(wpm) AS all_time_avg_wpm " +
+                                        "FROM suddendeathresult " +
+                                        "INNER JOIN player_profiles ON suddendeathresult.players_ID = player_profiles.players_ID " +
+                                        "WHERE player_profiles.players_email = ?";
+                                try (PreparedStatement allTimeAvgStatement = connection.prepareStatement(allTimeAvgQuery)) {
+                                    allTimeAvgStatement.setString(1, email);
+                                    try (ResultSet allTimeAvgResult = allTimeAvgStatement.executeQuery()) {
+                                        double allTimeAvgAccuracy1 = 0.0;
+                                        double allTimeAvgWPM1 = 0.0;
+    
+                                        if (allTimeAvgResult.next()) {
+                                            allTimeAvgAccuracy1 = allTimeAvgResult.getDouble("all_time_avg_accuracy");
+                                            allTimeAvgWPM1 = allTimeAvgResult.getDouble("all_time_avg_wpm");
+                                        }
+
+                                        String allTimeAvgAccuracy = String.format("%.5f", allTimeAvgAccuracy1);
+                                        String allTimeAvgWPM = String.format("%.5f", allTimeAvgWPM1);
+
+    
+                                        // Display fetched data in the UI (labels, etc.)
+                                        JDialog profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Player Profile", true);
+                                        profileDialog.setLayout(new BorderLayout());
+                                        profileDialog.setSize(500, 250);
+
+                                        JLabel usernameLabel = new JLabel("Username: " + email);
+                                        usernameLabel.setFont(new Font("Arial", Font.BOLD, 18));
+                                        usernameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                                        profileDetailsPanel.add(usernameLabel, BorderLayout.NORTH);
+
+                                        JPanel rightPanel = new JPanel(new GridLayout(0, 1, 0, 10));
+                                        rightPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
+
+                                        JLabel allTimeLabel = new JLabel("All Time", SwingConstants.CENTER);
+                                        allTimeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                                        rightPanel.add(allTimeLabel);
+
+                                        JLabel allTimeAccuracyLabel = new JLabel("Avg Accuracy: " + allTimeAvgAccuracy);
+                                        JLabel allTimeWPMLabel = new JLabel("Avg WPM: " + allTimeAvgWPM);
+                                        allTimeAccuracyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                                        allTimeWPMLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+                                        rightPanel.add(allTimeAccuracyLabel);
+                                        rightPanel.add(allTimeWPMLabel);
+
+                                        JScrollPane scrollPane = new JScrollPane(rightPanel);
+
+                                        profileDetailsPanel.add(scrollPane, BorderLayout.CENTER);
+                                        profileDialog.add(profileDetailsPanel, BorderLayout.CENTER);
+                                        profileDialog.setVisible(true);
+                                                                                
+
+                                    }
+                                }
+                            }
+                        
+                    else {
+                        // No records found for the player
+                        JDialog profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Player Profile", true);
+                        profileDialog.setLayout(new BorderLayout());
+                        profileDialog.setSize(500, 250);
+                        JLabel noDataLabel = new JLabel("No data available for this player.");
+                        noDataLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                        profileDetailsPanel.add(noDataLabel);
+                        profileDialog.add(profileDetailsPanel, BorderLayout.CENTER);
+                        profileDialog.setVisible(true);
+                    }
+                }
+            }
+    
+            revalidate(); // Refresh the panel to display new components
+            repaint();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle potential exceptions properly in your application
+        }
+    }
 
 
 
@@ -439,5 +621,8 @@ public class Profiledesign extends javax.swing.JFrame {
     private javax.swing.JButton ExitButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel Mispelled_label;
+    private javax.swing.JLabel Mispelled_words;
+    private javax.swing.JButton sudden_death;
     // End of variables declaration                   
 }

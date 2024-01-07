@@ -21,7 +21,9 @@ import javax.swing.border.EmptyBorder;
 
 public class Leaderboard extends javax.swing.JFrame {
     private JPanel profileDetailsPanel;
-    public Leaderboard() {
+    private static String email;
+    public Leaderboard(String email) {
+        this.email = email;
         Profiledesign.fetchEmails();
         initComponents();
         getDetails();
@@ -404,7 +406,7 @@ public class Leaderboard extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {     
         this.dispose();                                    
-        Menu menu = new Menu();
+        Menu menu = new Menu(email);
         menu.setVisible(true);
         menu.setLocationRelativeTo(null);
     } 
@@ -450,13 +452,16 @@ public class Leaderboard extends javax.swing.JFrame {
                         try (PreparedStatement last10AvgStatement = connection.prepareStatement(last10AvgQuery)) {
                             last10AvgStatement.setString(1, email);
                             try (ResultSet last10AvgResult = last10AvgStatement.executeQuery()) {
-                                double last10AvgAccuracy = 0.0;
-                                double last10AvgWPM = 0.0;
+                                double last10AvgAccuracy1 = 0.0;
+                                double last10AvgWPM1 = 0.0;
     
                                 if (last10AvgResult.next()) {
-                                    last10AvgAccuracy = last10AvgResult.getDouble("last_10_avg_accuracy");
-                                    last10AvgWPM = last10AvgResult.getDouble("last_10_avg_wpm");
+                                    last10AvgAccuracy1 = last10AvgResult.getDouble("last_10_avg_accuracy");
+                                    last10AvgWPM1 = last10AvgResult.getDouble("last_10_avg_wpm");
                                 }
+
+                                String last10AvgAccuracy = String.format("%.5f", last10AvgAccuracy1);
+                                String last10AvgWPM = String.format(" %.5f", last10AvgWPM1);
     
                                 String allTimeAvgQuery = "SELECT AVG(accuracy) AS all_time_avg_accuracy, AVG(wpm) AS all_time_avg_wpm " +
                                         "FROM results " +
@@ -465,13 +470,17 @@ public class Leaderboard extends javax.swing.JFrame {
                                 try (PreparedStatement allTimeAvgStatement = connection.prepareStatement(allTimeAvgQuery)) {
                                     allTimeAvgStatement.setString(1, email);
                                     try (ResultSet allTimeAvgResult = allTimeAvgStatement.executeQuery()) {
-                                        double allTimeAvgAccuracy = 0.0;
-                                        double allTimeAvgWPM = 0.0;
+                                        double allTimeAvgAccuracy1 = 0.0;
+                                        double allTimeAvgWPM1 = 0.0;
     
                                         if (allTimeAvgResult.next()) {
-                                            allTimeAvgAccuracy = allTimeAvgResult.getDouble("all_time_avg_accuracy");
-                                            allTimeAvgWPM = allTimeAvgResult.getDouble("all_time_avg_wpm");
+                                            allTimeAvgAccuracy1 = allTimeAvgResult.getDouble("all_time_avg_accuracy");
+                                            allTimeAvgWPM1 = allTimeAvgResult.getDouble("all_time_avg_wpm");
                                         }
+
+                                        String allTimeAvgAccuracy = String.format("%.5f", allTimeAvgAccuracy1);
+                                        String allTimeAvgWPM = String.format("%.5f", allTimeAvgWPM1);
+
     
                                         // Display fetched data in the UI (labels, etc.)
                                         JDialog profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Player Profile", true);

@@ -2,17 +2,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerGameLogic extends GameLogic {
-     boolean punctuation;
+    boolean punctuation;
 
-    public TimerGameLogic(int gameDuration, String textFile, int numOfWord) {
-        super(gameDuration, textFile, numOfWord);
+    public TimerGameLogic(int gameDuration, String textFile, int numOfWord, String userName) {
+        super(gameDuration, textFile, numOfWord, userName);
     }
-    
-    public TimerGameLogic(int gameDuration, String textFile, int numOfWord, boolean punctuation) {
-        super(gameDuration, textFile, numOfWord);
+    public TimerGameLogic(int gameDuration, String textFile, int numOfWord, boolean punctuation, String userName) {
+        super(gameDuration, textFile, numOfWord, userName);
         this.punctuation = punctuation;
     }
-    
+
     @Override
     public void getRandomWord() {
         if (punctuation) {

@@ -39,7 +39,7 @@ private void saveResultsToDatabase(double accuracy, double WPM) {
             int playerID = getPlayerIdFromEmail(Profile.email);                            // Fetch playerId using emai
             String insertQuery = "INSERT INTO results (players_ID, accuracy, wpm) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setInt(1, playerID); // Replace userId with the actual user's ID
+                preparedStatement.setInt(1, playerID); 
                 preparedStatement.setDouble(2, accuracy);
                 preparedStatement.setDouble(3, WPM);
                 preparedStatement.executeUpdate();
@@ -70,4 +70,40 @@ private void saveResultsToDatabase(double accuracy, double WPM) {
         }
         return playerId;
     }
+
+    public void SuddenDeathAccuracyWPM(int correctCharactersTyped, int totalCharactersTyped,
+                                    int totalWordsTyped, int correctWordsTyped, int gameDuration) {
+    double accuracy = (double) correctCharactersTyped / (totalCharactersTyped - totalWordsTyped) * 100.0;
+    if (accuracy < 0) {
+        accuracy = 0;
+    }
+
+    System.out.println("Accuracy: " + (int) accuracy + "%");
+
+    double minutes = (double) gameDuration / 60.0;
+    double wpm = ((double) correctCharactersTyped / 5.0) / minutes;
+
+    System.out.println("Words Per Minute (WPM): " + (int) wpm);
+    String message = String.format("WPM        : %.2f\nAccuracy : %.2f%%", wpm, accuracy);
+    JOptionPane.showMessageDialog(null, message);
+    saveResultsToDatabase1(accuracy, wpm);
+}
+private void saveResultsToDatabase1(double accuracy, double WPM) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            int playerID = getPlayerIdFromEmail(Profile.email);                            // Fetch playerId using emai
+            String insertQuery = "INSERT INTO suddendeathresult (players_ID, accuracy, wpm) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setInt(1, playerID); 
+                preparedStatement.setDouble(2, accuracy);
+                preparedStatement.setDouble(3, WPM);
+                preparedStatement.executeUpdate();
+            }
+            System.out.println("Results saved to the database.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Accuracy : " + (int) accuracy + " WPM : " + (int) WPM);
+    }    
+
 }

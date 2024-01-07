@@ -1,6 +1,8 @@
-public class WordsMode extends javax.swing.JFrame {
 
-    public WordsMode() {
+public class WordsMode extends javax.swing.JFrame {
+    String email;
+    public WordsMode(String email) {
+        this.email = email;
         initComponents();
     }
 
@@ -153,32 +155,32 @@ public class WordsMode extends javax.swing.JFrame {
 
     private void Jbutton10wordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbutton10wordsActionPerformed
         numOfWord = 10;
-        new MainGame(0, "dictionary.txt", numOfWord, true).setVisible(true);
+        new MainGame(0, "dictionary.txt", numOfWord, "Words Mode", email).setVisible(true);
         this.dispose();
 
     }
 
     private void Jbutton100wordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbutton100wordsActionPerformed
         numOfWord = 100;
-        new MainGame(0, "dictionary.txt", numOfWord, true).setVisible(true);
+        new MainGame(0, "dictionary.txt", numOfWord, "Words Mode", email).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Jbutton100wordsActionPerformed
 
     private void Jbutton50wordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbutton50wordsActionPerformed
         numOfWord = 50;
-        new MainGame(0, "dictionary.txt", numOfWord, true).setVisible(true);
+        new MainGame(0, "dictionary.txt", numOfWord, "Words Mode", email).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Jbutton50wordsActionPerformed
 
     private void Jbutton25wordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbutton25wordsActionPerformed
         numOfWord = 25;
-        new MainGame(0, "dictionary.txt", numOfWord, true).setVisible(true);
+        new MainGame(0, "dictionary.txt", numOfWord, "Words Mode", email).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Jbutton25wordsActionPerformed
 
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
         // TODO add your handling code here:
-        Menu MenuFrame = new Menu();
+        Menu MenuFrame = new Menu(email);
         MenuFrame.setVisible(true);
         MenuFrame.setLocationRelativeTo(null);
         this.dispose();
@@ -212,11 +214,11 @@ public class WordsMode extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new WordsMode().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new WordsMode().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
